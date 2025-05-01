@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {# Hereda de tu plantilla base #}
+
+{% block title %}Registrarse - Estadísticas NBA{% endblock %}
+
+{% block encabezado %}
+    <h1>Crear una Nueva Cuenta</h1>
+{% endblock %}
+
+{% block contenido %}
+
+    <p>Por favor, complete el siguiente formulario para crear una cuenta:</p>
+
+    <form method="post" action="{% url 'register' %}"> {# URL que procesa el registro #}
+        {% csrf_token %}
+
+        {# Renderiza el formulario completo #}
+        {# form.as_p renderiza cada campo en un párrafo <p> #}
+        {# form.as_ul renderiza cada campo en un ítem <li> #}
+        {# form.as_table renderiza cada campo en una fila <tr> #}
+
+        {{ form.as_p }} {# Muestra los campos (username, email, password1, password2) y errores #}
+
+        <button type="submit" style="margin-top: 10px; padding: 8px 15px;">Registrarse</button>
+    </form>
+
+    <p style="margin-top: 15px;">
+        ¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a>.
+    </p>
+
+{% endblock %}

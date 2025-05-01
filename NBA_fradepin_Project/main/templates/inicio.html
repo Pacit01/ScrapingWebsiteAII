@@ -1,0 +1,41 @@
+<!-- filepath: main/templates/inicio.html -->
+{% extends 'base.html' %} {# Hereda de la base #}
+
+{% block title %}Inicio - Estadísticas NBA{% endblock %}
+
+{% block encabezado %}
+    <h1>Bienvenido al Portal de Estadísticas de la NBA</h1>
+{% endblock %}
+
+{% block contenido %}
+    <h2>Resumen Rápido</h2>
+    {% if num_jugadores is not None %}
+        <p>Actualmente tenemos información registrada de <strong>{{ num_jugadores }}</strong> jugador{{ num_jugadores|pluralize:"es" }} en nuestra base de datos.</p>
+    {% else %}
+        <p>Actualmente no hay datos de jugadores cargados en la base de datos.</p>
+        <p>Puedes intentar <a href="{% url 'main:carga' %}">cargar los datos</a>.</p>
+    {% endif %}
+
+    <h2>¿Qué puedes hacer?</h2>
+    <ul>
+        <li><a href="{% url 'main:lista_jugadores' %}">Ver la lista completa de jugadores</a>.</li>
+        <li>Utilizar la <a href="{% url 'main:buscar_jugadores_whoosh' %}">búsqueda general</a> para encontrar jugadores.</li>
+        <li><a href="{% url 'main:buscar_por_premio' %}">Buscar jugadores por un premio específico</a>.</li>
+        <li>Si eres administrador, puedes <a href="{% url 'main:carga' %}">actualizar la base de datos</a> (¡con precaución!).</li>
+    </ul>
+{% endblock %}
+
+{% block style_css %}
+    <style>
+        h2 {
+            color: #007bff;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}

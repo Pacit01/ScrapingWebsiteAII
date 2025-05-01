@@ -1,0 +1,99 @@
+<!-- filepath: main/templates/base.html -->
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Para responsividad básica -->
+    <title>{% block title %}Estadísticas NBA{% endblock %}</title> <!-- Título de página dinámico -->
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        header a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        header a:hover {
+            text-decoration: underline;
+        }
+        nav ul {
+            padding: 0;
+            list-style: none;
+            background: #444;
+            text-align: center;
+            margin-top: 0;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+        nav ul li a:hover {
+            background: #555;
+        }
+        section {
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 960px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            color: #777;
+            font-size: 0.9em;
+        }
+        {% block style_css %}{% endblock %}
+    </style>
+</head>
+<body>
+    <header>
+        {% block encabezado %}
+            <h1>Portal de Estadísticas NBA</h1>
+        {% endblock %}
+        <nav>
+             <ul>
+                <!-- Se agregó el namespace "main:" -->
+                <li><a href="{% url 'main:inicio' %}">Inicio</a></li>
+                <li><a href="{% url 'main:lista_jugadores' %}">Lista de Jugadores</a></li>
+                <li><a href="{% url 'main:buscar_jugadores_whoosh' %}">Búsqueda General (Whoosh)</a></li>
+                <li><a href="{% url 'main:buscar_jugadores_django' %}">Búsqueda General (Django)</a></li>
+                <li><a href="{% url 'main:buscar_por_premio' %}">Buscar por Premio</a></li>
+                <li><a href="{% url 'main:carga' %}">Cargar la BD</a></li>
+             </ul>
+        </nav>
+    </header>
+
+    <section>
+        {% block contenido %}
+        {% endblock %}
+    </section>
+
+    <footer>
+        {% block pie %}
+            <p>© {% now "Y" %} Mi Proyecto NBA. Todos los derechos reservados.</p>
+        {% endblock %}
+    </footer>
+</body>
+</html>

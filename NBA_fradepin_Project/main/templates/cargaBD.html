@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Resultado de Carga - Estadísticas NBA{% endblock %}
+
+{% block encabezado %}
+    <h1>Resultado de la Carga de Datos</h1>
+{% endblock %}
+
+{% block contenido %}
+    {% if mensaje %}
+        <p>{{ mensaje }}</p>
+    {% else %}
+        <p>El proceso de carga ha finalizado.</p>
+    {% endif %}
+
+    <p><a href="{% url 'main:inicio' %}">Volver al Inicio</a></p>
+{% endblock %}

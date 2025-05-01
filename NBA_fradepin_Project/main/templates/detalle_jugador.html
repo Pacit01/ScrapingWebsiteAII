@@ -1,0 +1,79 @@
+<!-- filepath: main/templates/detalle_jugador.html -->
+{% extends 'base.html' %} {# Hereda de la base #}
+
+{% block title %}{{ jugador.nombre }} - Detalles - Estadísticas NBA{% endblock %}
+
+{% block style_css %}
+.detail-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+.detail-section h3 {
+    margin-top: 0;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+.detail-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+.detail-section li {
+    margin-bottom: 5px;
+}
+.no-data {
+    color: #777;
+}
+{% endblock %}
+
+{% block encabezado %}
+    <h1>{{ jugador.nombre }}</h1>
+{% endblock %}
+
+{% block contenido %}
+    <div class="detail-section">
+        <h3>Información General</h3>
+        <ul>
+            <li><strong>Nombre:</strong> {{ jugador.nombre }}</li>
+            <li><strong>Equipo (Histórico):</strong>
+                {% if jugador.equipo and jugador.equipo != "Unknown" %}
+                    {{ jugador.equipo }}
+                {% else %}
+                    <span class="no-data">No disponible</span>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+
+    <div class="detail-section">
+        <h3>Estadísticas (Líder Histórico)</h3>
+        {% if estadisticas %}
+            <ul>
+                <li><strong>Puntos:</strong> {{ estadisticas.puntos|default:"N/A" }}</li>
+                <li><strong>Rebotes:</strong> {{ estadisticas.rebotes|default:"N/A" }}</li>
+                <li><strong>Asistencias:</strong> {{ estadisticas.asistencias|default:"N/A" }}</li>
+                <li><strong>Robos:</strong> {{ estadisticas.robos|default:"N/A" }}</li>
+                <li><strong>Tapones:</strong> {{ estadisticas.tapones|default:"N/A" }}</li>
+            </ul>
+        {% else %}
+            <p class="no-data">No hay estadísticas disponibles.</p>
+        {% endif %}
+    </div>
+
+    <div class="detail-section">
+        <h3>Premios Ganados</h3>
+        {% if premios %}
+            <ul>
+                {% for premio in premios %}
+                    <li>{{ premio.nombre_premio }} ({{ premio.año }})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-data">Este jugador no tiene premios registrados.</p>
+        {% endif %}
+    </div>
+
+    <p><a href="{% url 'main:lista_jugadores' %}">← Volver a la lista de jugadores</a></p>
+{% endblock %}

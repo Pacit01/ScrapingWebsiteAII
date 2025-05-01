@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {# Hereda de la plantilla base #}
+
+{% block title %}Confirmar Carga de Datos - Estadísticas NBA{% endblock %} {# Título específico #}
+
+{% block encabezado %}
+    <h1>Confirmar Carga de Datos NBA</h1>
+{% endblock %}
+
+{% block contenido %}
+    <h2>¡Atención!</h2>
+    <p><strong>Este proceso puede tardar varios minutos.</strong></p>
+    <p><strong>ADVERTENCIA:</strong> Al aceptar, se borrarán <strong>TODOS</strong> los datos actuales de jugadores, estadísticas y premios de la base de datos y se volverán a cargar desde las fuentes web (NBA.com, InsideHoops).</p>
+    <p>Este proceso requiere una conexión a internet activa.</p>
+    <p>¿Está seguro de que desea continuar?</p>
+
+    {# El formulario envía la petición POST a la misma URL ('/carga/') #}
+    {# La vista 'carga' detectará si se presionó 'Aceptar' o 'Cancelar' #}
+    <form id='confirmacionForm' method='post' action=''> {% csrf_token %}
+        <input type="submit" name="Aceptar" value="Sí, Cargar Datos" style="background-color: #dc3545; color: white; padding: 10px 15px; border: none; cursor: pointer; margin-right: 10px;">
+        <input type="submit" name="Cancelar" value="No, Cancelar" style="background-color: #6c757d; color: white; padding: 10px 15px; border: none; cursor: pointer;">
+        {# Alternativamente, el botón cancelar podría ser un enlace a la página de inicio #}
+        {# <a href="{% url 'inicio' %}" style="text-decoration: none; background-color: #6c757d; color: white; padding: 10px 15px; border-radius: 3px;">Cancelar</a> #}
+    </form>
+{% endblock %}
+
+{% block style_css %}
+    <style>
+        /* Estilos específicos para la página de confirmación */
+        #confirmacionForm {
+            text-align: center; /* Centra el formulario */
+            margin-top: 20px; /* Espacio superior */
+        }
+        input[type="submit"] {
+            border-radius: 5px; /* Bordes redondeados */
+            font-size: 16px; /* Tamaño de fuente */
+        }
+    </style>
+{% endblock %}

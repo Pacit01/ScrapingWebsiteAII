@@ -1,0 +1,56 @@
+<!-- filepath: main/templates/lista_jugadores.html -->
+{% extends 'base.html' %} {# Hereda de la base #}
+
+{% block title %}Lista de Jugadores - Estadísticas NBA{% endblock %}
+
+{% block style_css %}
+.player-list ul {
+    list-style: none;
+    padding: 0;
+}
+.player-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+.player-list li:last-child {
+    border-bottom: none;
+}
+.player-list a {
+    text-decoration: none;
+    color: #007bff;
+}
+.player-list a:hover {
+    text-decoration: underline;
+}
+.player-team {
+    color: #666;
+    font-size: 0.9em;
+    margin-left: 10px;
+}
+{% endblock %}
+
+{% block encabezado %}
+    <h1>Lista Completa de Jugadores Registrados</h1>
+{% endblock %}
+
+{% block contenido %}
+    <div class="player-list">
+        {% if jugadores %}
+            <p>Mostrando {{ jugadores|length }} jugador{{ jugadores|length|pluralize:"es" }}.</p>
+            <ul>
+                {% for jugador in jugadores %}
+                    <li>
+                        <a href="{% url 'main:detalle_jugador' jugador.id %}">
+                            {{ jugador.nombre }}
+                        </a>
+                        {% if jugador.equipo and jugador.equipo != "Unknown" %}
+                            <span class="player-team">({{ jugador.equipo }})</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay jugadores registrados. <a href="{% url 'main:carga' %}">Cargar datos</a>.</p>
+        {% endif %}
+    </div>
+{% endblock %}

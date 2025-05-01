@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {# Hereda de tu plantilla base #}
+
+{% block title %}Mi Perfil - {{ user.username }} - Estadísticas NBA{% endblock %} {# Título dinámico con nombre de usuario #}
+
+{% block encabezado %}
+    <h1>Perfil de Usuario: {{ user.username }}</h1> {# Muestra el nombre de usuario #}
+{% endblock %}
+
+{% block contenido %}
+
+    {# Verifica si el usuario está autenticado (esta página no debería ser accesible si no lo está) #}
+    {% if user.is_authenticated %}
+        <h2>Información del Perfil</h2>
+        <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+        <p><strong>Correo electrónico:</strong> {{ user.email }}</p> {# Muestra el email si está disponible #}
+        <p><strong>Nombre:</strong> {{ user.first_name|default:"No especificado" }}</p> {# Muestra nombre real si existe #}
+        <p><strong>Apellidos:</strong> {{ user.last_name|default:"No especificado" }}</p> {# Muestra apellidos si existen #}
+        <p><strong>Usuario desde:</strong> {{ user.date_joined|date:"d/m/Y" }}</p> {# Fecha de registro formateada #}
+        <p><strong>Último inicio de sesión:</strong> {{ user.last_login|date:"d/m/Y H:i" }}</p> {# Último login formateado #}
+
+        {# Aquí podrías añadir más funcionalidades relacionadas con el perfil #}
+        {# Por ejemplo: #}
+        {# - Enlace para editar perfil #}
+        {# - Lista de jugadores favoritos guardados #}
+        {# - Historial de búsquedas #}
+        {# <p><a href="#">Editar Perfil</a></p> #}
+        {# <p><a href="#">Cambiar Contraseña</a></p> #}
+
+        {# Botón/Enlace para cerrar sesión #}
+        <form action="{% url 'logout' %}" method="post" style="margin-top: 20px;"> {# URL para logout #}
+            {% csrf_token %}
+            <button type="submit">Cerrar Sesión</button>
+        </form>
+
+    {% else %}
+        {# Este mensaje no debería aparecer si la vista requiere login #}
+        <p>Debes <a href="{% url 'login' %}?next={{ request.path }}">iniciar sesión</a> para ver tu perfil.</p>
+    {% endif %}
+
+{% endblock %}

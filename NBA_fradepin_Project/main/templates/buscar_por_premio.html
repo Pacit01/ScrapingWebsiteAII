@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Buscar Jugadores por Premio - Estadísticas NBA{% endblock %}
+
+{% block style_css %}
+<style>
+    .search-results ul {
+        list-style: none;
+        padding: 0;
+    }
+    .search-results li {
+        background-color: #f9f9f9;
+        border: 1px solid #eee;
+        margin-bottom: 10px;
+        padding: 10px 15px;
+        border-radius: 4px;
+    }
+    .search-results li strong {
+        font-size: 1.1em;
+    }
+</style>
+{% endblock %}
+
+{% block encabezado %}
+    <h1>Buscar Jugadores por Premio Ganado</h1>
+{% endblock %}
+
+{% block contenido %}
+    <form method="post" action="">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.premio.errors }}
+            <label for="{{ form.premio.id_for_label }}">{{ form.premio.label }}:</label>
+            {{ form.premio }}
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Buscar</button>
+    </form>
+
+    <div class="search-results">
+        {% if premio_seleccionado %}
+            <h2>Resultados para: {{ premio_seleccionado }}</h2>
+            {% if resultados %}
+                <ul>
+                {% for premio in resultados %}
+                    <li>
+                        <strong>
+                            <a href="{% url 'main:detalle_jugador' premio.jugador.id %}">
+                                {{ premio.jugador.nombre }}
+                            </a>
+                        </strong>
+                        <span> - {{ premio.año }}</span>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No se encontraron jugadores con este premio.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}
